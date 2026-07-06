@@ -47,7 +47,7 @@ import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (<DashboardLayout></DashboardLayout>),
+    element: (<ProtectedRoute><DashboardLayout></DashboardLayout></ProtectedRoute>),
     children: [
       {
         path: "/",
