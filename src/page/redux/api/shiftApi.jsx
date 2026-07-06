@@ -1,3 +1,4 @@
+import { areaElementClasses } from "@mui/x-charts";
 import { baseApi } from "./baseApi";
 
 const shift = baseApi.injectEndpoints({
@@ -10,7 +11,7 @@ const shift = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-getMyNotification: builder.query({
+    getMyNotification: builder.query({
       query: () => ({
         url: `/notification/get-notifications`,
         method: "GET",
@@ -18,12 +19,11 @@ getMyNotification: builder.query({
       providesTags: ["updateProfile"],
     }),
 
-  updateSeen: builder.mutation({
+    updateSeen: builder.mutation({
       query: () => {
         return {
           url: `/notification/see-notifications`,
           method: "PATCH",
-        
         };
       },
       invalidatesTags: ["updateProfile"],
@@ -84,7 +84,8 @@ getMyNotification: builder.query({
       },
       invalidatesTags: ["updateProfile"],
     }),
-      deleteNotification: builder.mutation({
+
+    deleteNotification: builder.mutation({
       query: (id) => {
         return {
           url: `/notification/delete/${id}`,
@@ -96,6 +97,7 @@ getMyNotification: builder.query({
   }),
 });
 
+
 export const {
   useAddShiftRequestMutation,
   useGetMyShiftQuery,
@@ -105,6 +107,5 @@ export const {
   useGetSingleVenueShiftQuery,
   useGetMyNotificationQuery,
   useUpdateSeenMutation,
-  useDeleteNotificationMutation
-
+  useDeleteNotificationMutation,
 } = shift;

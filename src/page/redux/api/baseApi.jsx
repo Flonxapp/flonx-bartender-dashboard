@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout } from "../features/auth/authSlice"; // path adjust
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://10.10.20.9:3500/api/v1",
+  baseUrl: "https://api.flonxapp.com/api/v1",
 
   prepareHeaders: (headers, { getState }) => {
     const token = getState().logInUser.token;
@@ -15,16 +15,16 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-// 🔥 AUTO LOGOUT WRAPPER
+// AUTO LOGOUT WRAPPER
 const baseQueryWithAuth = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  // ❌ TOKEN EXPIRED / UNAUTHORIZED
+  
   if (result?.error?.status === 401) {
-    api.dispatch(logout()); // clear redux state
-    localStorage.removeItem("persist:quiz-app"); // optional clean persist
+    api.dispatch(logout()); 
+    localStorage.removeItem("persist:quiz-app"); 
 
-    window.location.href = "/login"; // force redirect
+    window.location.href = "/login";
   }
 
   return result;
@@ -36,4 +36,4 @@ export const baseApi = createApi({
   tagTypes: ["overview", "host"],
   endpoints: () => ({}),
 });
-export const imageUrl = "https://rnj64vmh-3500.inc1.devtunnels.ms";
+export const imageUrl = "https://api.flonxapp.com";
