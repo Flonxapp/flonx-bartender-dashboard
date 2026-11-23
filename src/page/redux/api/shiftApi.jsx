@@ -1,4 +1,3 @@
-import { areaElementClasses } from "@mui/x-charts";
 import { baseApi } from "./baseApi";
 
 const shift = baseApi.injectEndpoints({
@@ -8,7 +7,7 @@ const shift = baseApi.injectEndpoints({
         url: `/shift/my-shift?status=${status}`,
         method: "GET",
       }),
-      providesTags: ["updateProfile"],
+      providesTags: ["shift"],
     }),
 
     getMyNotification: builder.query({
@@ -16,7 +15,7 @@ const shift = baseApi.injectEndpoints({
         url: `/notification/get-notifications`,
         method: "GET",
       }),
-      providesTags: ["updateProfile"],
+      providesTags: ["notification"],
     }),
 
     updateSeen: builder.mutation({
@@ -26,7 +25,7 @@ const shift = baseApi.injectEndpoints({
           method: "PATCH",
         };
       },
-      invalidatesTags: ["updateProfile"],
+      invalidatesTags: ["notification"],
     }),
 
     getSingleShift: builder.query({
@@ -36,7 +35,7 @@ const shift = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["updateProfile"],
+      providesTags: ["shift"],
     }),
 
     getSingleVenueShift: builder.query({
@@ -46,31 +45,6 @@ const shift = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["updateProfile"],
-    }),
-
-    addShiftRequest: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/shift/send-request",
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["updateProfile"],
-    }),
-
-    getAllShift: builder.query({
-      query: ({ searchTerm, page, limit, status }) => ({
-        url: `/shift/my-shift`,
-        method: "GET",
-        params: {
-          page,
-          limit,
-          searchTerm: searchTerm || undefined,
-          status: status || undefined, // 🔥 key part
-        },
-      }),
       providesTags: ["shift"],
     }),
 
@@ -82,7 +56,7 @@ const shift = baseApi.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["updateProfile"],
+      invalidatesTags: ["shift"],
     }),
 
     deleteNotification: builder.mutation({
@@ -92,16 +66,14 @@ const shift = baseApi.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["updateProfile"],
+      invalidatesTags: ["notification"],
     }),
   }),
 });
 
 
 export const {
-  useAddShiftRequestMutation,
   useGetMyShiftQuery,
-  useGetAllShiftQuery,
   useGetSingleShiftQuery,
   useUpdateShiftRequestMutation,
   useGetSingleVenueShiftQuery,

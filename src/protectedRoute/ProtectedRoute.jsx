@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
+// Only logged-in bartenders get in. Sessions saved before the role was
+// stored have role null; the API itself still enforces the role.
 const ProtectedRoute = ({ children }) => {
-  const { token } = useSelector((state) => state.logInUser);
-  console.log(token);
+  const { token, role } = useSelector((state) => state.logInUser);
   const { pathname } = useLocation();
 
-  if (!token) {
-    return <Navigate to="/login" state={{ path: pathname }}></Navigate>;
+  if (!token || (role && role !== "bartender")) {
+    return <Navigate to="/login" replace state={{ path: pathname }} />;
   }
   return children;
 };

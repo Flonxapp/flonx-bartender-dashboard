@@ -1,17 +1,27 @@
 
 import React from "react";
-import { User, Settings, LogOut } from "lucide-react";
+
 
 import ProfileIcon from "../../components/icon/ProfileIcon";
 import SettingIco from "../../components/icon/SettingIco";
 import LogoutIco from "../../components/icon/LogoutIco";
 import ArrayRightIco from "../../components/icon/ArrayRightIco";
 import { Navigate } from "../../Navigate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/features/auth/authSlice";
+import { baseApi } from "../redux/api/baseApi";
 import { MdOutlineNotificationImportant } from "react-icons/md";
 import { useGetMyNotificationQuery } from "../redux/api/shiftApi";
 
 const VenueProfile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    navigate("/login", { replace: true });
+  };
   const { data: notificationData, isLoading } =
     useGetMyNotificationQuery()
       const unreadCount =
@@ -71,13 +81,13 @@ const VenueProfile = () => {
         </div></Link>
 
         {/* Logout */}
-      <Link to={'/login'}>
+      <button type="button" onClick={handleLogout} className="w-full text-left">
         <div className="flex items-center  gap-3 bg-[#EF44441A] rounded-2xl p-3 shadow-lg border border-[#EF44441A]">
           <div className="bg-[#FFFFFF0D] p-2 rounded-lg">
             <LogoutIco  />
           </div>
           <span className="text-[#EF4444] text-sm font-medium">Log Out</span>
-        </div></Link>
+        </div></button>
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ const JoinAs = () => {
           Join as a Bartender
         </h2>
         <p className="text-gray-400 mb-6 text-sm">
-          Create your account to manage your Venue, post shifts, and hire bartenders.
+          Create your bartender account to find shifts at venues near you.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">

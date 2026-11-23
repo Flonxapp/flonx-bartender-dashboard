@@ -23,7 +23,6 @@ const Box = ({ title, value }) => (
 
 const ShiftDetails = () => {
   const { id } = useParams();
-  console.log(id)
 
   const [actionType, setActionType] = useState(null);
 
@@ -31,7 +30,6 @@ const ShiftDetails = () => {
     useUpdateShiftRequestMutation();
 
   const { data, isLoading, isError } = useGetSingleShiftQuery({ id });
-  console.log(data);
   if (isLoading) return <PageLoader></PageLoader>;
   if (isError) return <NoData></NoData>;
 
@@ -49,7 +47,6 @@ const ShiftDetails = () => {
       message.success(res?.message || "Action successful");
     } catch (err) {
       message.error(err?.data?.message || "Action failed");
-      console.log(err);
     } finally {
       setActionType(null);
     }

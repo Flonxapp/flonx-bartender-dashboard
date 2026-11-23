@@ -1,4 +1,3 @@
-"use client";
 
 import { Clock } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -61,7 +60,11 @@ const Card = ({ item }) => {
 };
 
 const Section = ({ title, status }) => {
-  const { data, isLoading } = useGetMyShiftQuery({ status });
+  const { data, isLoading, isError, refetch } = useGetMyShiftQuery(
+    { status },
+    // new shift requests and status changes show up without a reload
+    { pollingInterval: 30000, skipPollingIfUnfocused: true },
+  );
 
   const formattedData =
     data?.data?.result?.map((item) => ({
@@ -88,6 +91,13 @@ const Section = ({ title, status }) => {
 
       {isLoading ? (
         <PageLoader></PageLoader>
+      ) : isError ? (
+        <div className="text-sm text-red-400 py-4">
+          Could not load shifts.{" "}
+          <button className="underline" onClick={refetch}>
+            Retry
+          </button>
+        </div>
       ) : formattedData.length > 0 ? (
         formattedData.slice(0, 4).map((item) => (
           <Card key={item.id} item={item} />

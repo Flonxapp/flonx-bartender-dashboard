@@ -1,168 +1,115 @@
 import { baseApi } from "./baseApi";
 
-const useApi = baseApi.injectEndpoints({
+const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     loginAdmin: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/auth/login",
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({ url: "/auth/login", method: "POST", body: data }),
     }),
 
     registerUser: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/user/register-user",
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: "/user/register-user",
+        method: "POST",
+        body: data,
+      }),
     }),
 
-    addVenue: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/venue/add-venue",
-          method: "POST",
-          body: data,
-        };
-      },
+    // sign-up: verify the email code / resend it
+    registerVerifyUser: builder.mutation({
+      query: (data) => ({ url: "/user/verify-code", method: "POST", body: data }),
+    }),
+    resendVerifyCode: builder.mutation({
+      query: (data) => ({
+        url: "/user/resend-verify-code",
+        method: "POST",
+        body: data,
+      }),
     }),
 
+    // forgot password: send code / verify it / resend it / set new password
+    forgotPassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/forget-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    registerVerify: builder.mutation({
+      query: (data) => ({
+        url: "/auth/verify-reset-otp",
+        method: "POST",
+        body: data,
+      }),
+    }),
     resentVerify: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/auth/resend-reset-code",
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: "/auth/resend-reset-code",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: data,
+      }),
     }),
 
     getProfile: builder.query({
-      query: () => {
-        return {
-          url: "/user/user-profile",
-          method: "GET",
-        };
-      },
-      providesTags: ["updateProfile"],
-    }),
-    forgotPassword: builder.mutation({
-      query: (email) => {
-        return {
-          url: "/auth/forget-password",
-          method: "POST",
-          body: email,
-        };
-      },
-    }),
-    registerVerify: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/auth/verify-reset-otp",
-          method: "POST",
-          body: data,
-        };
-      },
-    }),
-
-
-        deleteAccount: builder.mutation({
-      query: (data) => ({
-        url: `/user/delete-account`,
-        method: "DELETE",
-        body: data,
-      }),
-      invalidatesTags: ["updateProfile"],      
-    }),
-
-    registerVerifyUser: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/user/verify-code",
-          method: "POST",
-          body: data,
-        };
-      },
-    }),
-    resetPassword: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/auth/reset-password",
-          method: "POST",
-          body: data,
-        };
-      },
+      query: () => ({ url: "/user/user-profile", method: "GET" }),
+      providesTags: ["profile"],
     }),
     updateProfile: builder.mutation({
-      query: ({ data }) => {
-        return {
-          url: "/user/update-profile",
-          method: "PATCH",
-          body: data,
-        };
-      },
-      invalidatesTags: ["updateProfile"],
-    }),
-
-    updateBartenderProfile: builder.mutation({
-      query: ({ data }) => {
-        return {
-          url: "/user/update-profile",
-          method: "PATCH",
-          body: data,
-        };
-      },
-      invalidatesTags: ["updateProfile"],
-    }),
-    changePassword: builder.mutation({
-      query: (data) => {
-        return {
-          url: "/auth/change-password",
-          method: "POST",
-          body: data,
-        };
-      },
-    }),
-    getHostUser: builder.query({
-      query: ({ user, page, search }) => {
-        return {
-          url: `/dashboard/get-all-user?role=${user}&page=${page}&searchTerm=${search}`,
-          method: "GET",
-        };
-      },
-      providesTags: ["host"],
-    }),
-
-    blockUserHost: builder.mutation({
-      query: (data) => ({
-        url: `/dashboard/block-unblock-user`,
+      query: ({ data }) => ({
+        url: "/user/update-profile",
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["host"],
+      invalidatesTags: ["profile"],
+    }),
+    updateBartenderProfile: builder.mutation({
+      query: ({ data }) => ({
+        url: "/user/update-profile",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["profile"],
+    }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    deleteAccount: builder.mutation({
+      query: (data) => ({
+        url: "/user/delete-account",
+        method: "DELETE",
+        body: data,
+      }),
+    }),
+
+    createSupport: builder.mutation({
+      query: (data) => ({ url: "/support/create", method: "POST", body: data }),
     }),
   }),
 });
 
 export const {
   useLoginAdminMutation,
-  useGetProfileQuery,
+  useRegisterUserMutation,
+  useRegisterVerifyUserMutation,
+  useResendVerifyCodeMutation,
   useForgotPasswordMutation,
   useRegisterVerifyMutation,
-  useResetPasswordMutation,
-  useUpdateProfileMutation,
-  useChangePasswordMutation,
-  useGetHostUserQuery,
-  useBlockUserHostMutation,
-  useRegisterUserMutation,
   useResentVerifyMutation,
-  useAddVenueMutation,
+  useResetPasswordMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
   useUpdateBartenderProfileMutation,
-  useRegisterVerifyUserMutation,
-  useDeleteAccountMutation
-} = useApi;
+  useChangePasswordMutation,
+  useDeleteAccountMutation,
+  useCreateSupportMutation,
+} = userApi;

@@ -101,7 +101,6 @@ const UpdateVenyeProfile = () => {
       message.success("Profile updated successfully!");
       
     } catch (error) {
-      console.log(error);
       message.error(error?.data?.message || "Update failed!");
     }
   };
@@ -194,7 +193,7 @@ const UpdateVenyeProfile = () => {
 
         {/* Submit */}
         <button
-          htmlType="submit"
+          type="submit"
           disabled={isLoading}
           className={`px-4 py-3 rounded-full text-white flex justify-center items-center gap-2 ${
             isLoading

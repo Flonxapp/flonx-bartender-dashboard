@@ -6,9 +6,10 @@ import { FaChevronRight, FaHome } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
 import { logout } from "../../page/redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { baseApi } from "../../page/redux/api/baseApi";
 
 import BarProfileIco from "../icon/BarProfileIco";
-import ManageProfileIco from "../icon/ManageProfileIco";
+import ShiftsIco from "../icon/ShiftsIco";
 import SupportIco from "../icon/SupportIco";
 import DashboardIco from "../icon/DashboardIco";
 
@@ -21,10 +22,16 @@ const items = [
     link: "/",
   },
   {
-    key: "venueProfile",
-    label: "Venue Profile",
-    icon: <BarProfileIco color={'white'}></BarProfileIco>,
-    link: "/dashboard/VenueProfile",
+    key: "shifts",
+    label: "My Shifts",
+    icon: <ShiftsIco color={"white"} />,
+    link: "/dashboard/shifts",
+  },
+  {
+    key: "profile",
+    label: "Profile & Setting",
+    icon: <BarProfileIco color={"white"} />,
+    link: "/dashboard/profile",
   },
   {
     key: "helpSupport",
@@ -81,7 +88,8 @@ const SidBar = () => {
   // Logout Function
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    dispatch(baseApi.util.resetApiState());
+    navigate("/login", { replace: true });
   };
 
   return (

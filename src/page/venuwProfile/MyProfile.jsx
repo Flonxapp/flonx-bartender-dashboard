@@ -8,7 +8,6 @@ import NoData from "../../components/NoData";
 
 const MyProfile = () => {
   const { data: profileData, isLoading, isError } = useGetProfileQuery();
-  console.log(profileData)
 
   if (isLoading) {
     return <PageLoader></PageLoader>;
@@ -19,7 +18,6 @@ const MyProfile = () => {
   }
 
   const profile = profileData?.data;
-  console.log(profile)
 
   return (
     <div className="px-3 pb-5">

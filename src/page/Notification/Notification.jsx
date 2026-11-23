@@ -11,7 +11,6 @@ import { message } from "antd";
 const Notification = () => {
   const { data: notificationData, isLoading } =
     useGetMyNotificationQuery();
-console.log(notificationData)
   const [seenNotification, { isLoading: seenLoading }] =
     useUpdateSeenMutation();
 
@@ -28,7 +27,6 @@ console.log(notificationData)
     try {
       await seenNotification().unwrap();
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -38,7 +36,6 @@ console.log(notificationData)
       message.success(res?.message || "Notification deleted!");
     } catch (error) {
       message.error(error?.data?.message || "Failed to delete notification.");
-      console.log(error);
     }
   };
 

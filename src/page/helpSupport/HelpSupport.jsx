@@ -1,14 +1,23 @@
 import React from "react";
 import { Navigate } from "../../Navigate";
-import { Button, Form, Input, message } from "antd";
+import { Form, Input, message } from "antd";
+import { useCreateSupportMutation } from "../redux/api/userApi";
 
 const HelpSupport = () => {
   const [form] = Form.useForm();
+  const [createSupport, { isLoading }] = useCreateSupportMutation();
 
-  const handleSubmit = (values) => {
-    console.log("Form Values:", values);
-    message.success("Your message has been sent!");
-    form.resetFields();
+  const handleSubmit = async (values) => {
+    try {
+      const res = await createSupport({
+        contactReason: values.topic,
+        message: values.message,
+      }).unwrap();
+      message.success(res?.message || "Your message has been sent!");
+      form.resetFields();
+    } catch (err) {
+      message.error(err?.data?.message || "Could not send your message");
+    }
   };
 
   return (
@@ -51,11 +60,11 @@ const HelpSupport = () => {
 
             <Form.Item>
               <button
-                type="primary"
-                htmlType="submit"
+                type="submit"
+                disabled={isLoading}
                 className="bg-gradient-to-tr w-[185px] from-[#822CE7] to-[#BB82FF] text-white shadow-md px-3 py-2 rounded-full"
               >
-                Send Message
+                {isLoading ? "Sending..." : "Send Message"}
               </button>
             </Form.Item>
           </Form>

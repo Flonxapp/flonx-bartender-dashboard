@@ -39,7 +39,7 @@ const items = [
     key: "venueProfile",
     label: "Profile & Setting",
     icon: <ProfileIco color={"white"} />,
-    link: "/dashboard/VenueProfile",
+    link: "/dashboard/profile",
   },
   {
     key: "helpSupport",
